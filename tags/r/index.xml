@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R on Ella Devenny&#39;s Github Site</title>
+    <link>http://elladevenny.github.io/tags/r/</link>
+    <description>Recent content in R on Ella Devenny&#39;s Github Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 16 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://elladevenny.github.io/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sports Data Analysis and Visualization</title>
+      <link>http://elladevenny.github.io/2021/03/16/sports-data-analysis-and-visualization/</link>
+      <pubDate>Tue, 16 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://elladevenny.github.io/2021/03/16/sports-data-analysis-and-visualization/</guid>
+      <description>Hey, Ella again. I am just learning the basics of creating a blog through R studio, so as part of our homework we were to create our first post. It is really exciting to see the knowledge and skills we have learned in my sports data course come to life. I am excited to share my journey on here and watch myself grow! I will be posting actual projects on here very soon.</description>
+    </item>
+    
+  </channel>
+</rss>
