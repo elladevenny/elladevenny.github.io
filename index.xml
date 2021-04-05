@@ -6,7 +6,17 @@
     <description>Recent content on Ella Devenny&#39;s Github Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://elladevenny.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 04 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://elladevenny.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Does the SEC really produce the most NFL players?</title>
+      <link>http://elladevenny.github.io/2021/04/04/does-the-sec-really-produce-the-most-nfl-players/</link>
+      <pubDate>Sun, 04 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://elladevenny.github.io/2021/04/04/does-the-sec-really-produce-the-most-nfl-players/</guid>
+      <description>A lot of college football fans, particularly those that support a team in the SEC conference, claim that the SEC is the best conference in college football. The SEC conference is packed with a lot of talent and are always strongly represented in rankings like the AP Top 25 Poll.
+If we dive into data focused on NFL players from the 2020-2021 season, is the SEC really dominant when it comes to NFL player production?</description>
+    </item>
+    
     <item>
       <title>About Ella Devenny</title>
       <link>http://elladevenny.github.io/about/</link>
@@ -14,45 +24,6 @@
       
       <guid>http://elladevenny.github.io/about/</guid>
       <description>Hi! My name is Ella Devenny and I am currently a student at the University of Nebraska- Lincoln. I am majoring in sports media and communication, with a minor in Law and Business. I have taken several courses that have expanded my knowledge with R-studio, and I am excited to be creating my first blog. I am creating projects currently for my &amp;ldquo;Sports Data Visualization and Analysis&amp;rdquo; course, in which I will be uploading to my blog!</description>
-    </item>
-    
-    <item>
-      <title>Sports Data Analysis and Visualization</title>
-      <link>http://elladevenny.github.io/2021/03/16/sports-data-analysis-and-visualization/</link>
-      <pubDate>Tue, 16 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>http://elladevenny.github.io/2021/03/16/sports-data-analysis-and-visualization/</guid>
-      <description>Hey, Ella again. I am just learning the basics of creating a blog through R studio, so as part of our homework we were to create our first post. It is really exciting to see the knowledge and skills we have learned in my sports data course come to life. I am excited to share my journey on here and watch myself grow! I will be posting actual projects on here very soon.</description>
-    </item>
-    
-    <item>
-      <title>Hello R Markdown</title>
-      <link>http://elladevenny.github.io/2020/12/01/hello-r-markdown/</link>
-      <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
-      
-      <guid>http://elladevenny.github.io/2020/12/01/hello-r-markdown/</guid>
-      <description>R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
-    </item>
-    
-    <item>
-      <title>A Plain Markdown Post</title>
-      <link>http://elladevenny.github.io/2016/12/30/a-plain-markdown-post/</link>
-      <pubDate>Fri, 30 Dec 2016 21:49:57 -0700</pubDate>
-      
-      <guid>http://elladevenny.github.io/2016/12/30/a-plain-markdown-post/</guid>
-      <description>This is a post written in plain Markdown (*.md) instead of R Markdown (*.Rmd). The major differences are:
- You cannot run any R code in a plain Markdown document, whereas in an R Markdown document, you can embed R code chunks (```{r}); A plain Markdown post is rendered through Blackfriday, and an R Markdown document is compiled by rmarkdown and Pandoc.  There are many differences in syntax between Blackfriday&amp;rsquo;s Markdown and Pandoc&amp;rsquo;s Markdown.</description>
-    </item>
-    
-    <item>
-      <title>Lorem Ipsum</title>
-      <link>http://elladevenny.github.io/2015/01/01/lorem-ipsum/</link>
-      <pubDate>Thu, 01 Jan 2015 13:09:13 -0600</pubDate>
-      
-      <guid>http://elladevenny.github.io/2015/01/01/lorem-ipsum/</guid>
-      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</description>
     </item>
     
   </channel>
