@@ -107,11 +107,8 @@ library(kableExtra)</code></pre>
 ## 
 ##     group_rows</code></pre>
 <pre class="r"><code>library(waffle)
-library(gt)
-
-setwd(&quot;~/Desktop/SPMC 350/2021_Spring_Sports_Data_Analysis/Data&quot;)
-
-NFLplayers &lt;- read_csv(&quot;NFLplayers.csv&quot;)</code></pre>
+library(gt)</code></pre>
+<pre class="r"><code>NFLplayers &lt;- read_csv(&quot;NFLplayers.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   College = col_character(),
@@ -133,9 +130,8 @@ NFLplayers &lt;- read_csv(&quot;NFLplayers.csv&quot;)</code></pre>
 <pre class="r"><code>top10 &lt;- NFLcount %&gt;%
   select(College, Conference, total) %&gt;%
   arrange(desc(total)) %&gt;%
-    filter(total &gt; 32)
-
-top10 %&gt;% 
+    filter(total &gt; 32)</code></pre>
+<pre class="r"><code>top10 %&gt;% 
   kable() %&gt;%
   kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;condensed&quot;)) %&gt;%
   column_spec(1, bold=T)</code></pre>
@@ -266,7 +262,12 @@ Big Ten
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>file.show(&quot;top10.pdf&quot;)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:image-ref-for-in-text"></span>
+<img src="CopyOftop10.pdf" alt="Top 10 colleges based on current NFL players" width="0.75" />
+<p class="caption">
+Figure 1: Top 10 colleges based on current NFL players
+</p>
+</div>
 <p>As we can see, Alabama is only ahead of Ohio State by 6 current NFL players. Now that we have viewed the top 10 colleges by NFL players, lets look at the conferences. We confirmed most beliefs that Alabama is the top college football team at producing NFL talent, but will that be enough to pull the SEC above every other conference?
 Let’s look at the Power 5 conferences. First I am going to create a new data set that will filter out the power 5 colleges. Then I am going to find the mean and total NFL players per conference. Let’s compare the conferences by their total NFL current players and average NFL current players amongst the teams.</p>
 <pre class="r"><code>Power5 &lt;- NFLcount %&gt;%
@@ -289,9 +290,8 @@ BigTen &lt;- c(&quot;Total&quot;=307, &quot;Mean&quot;=23.6)
 Pac12&lt;- c(&quot;Total&quot;=258, &quot;Mean&quot;=18.4)
 SEC &lt;- c(&quot;Total&quot;=413, &quot;Mean&quot;=27.5)
 Conferencetotals &lt;- c(&quot;ACC&quot;=247, &quot;Big 12&quot;=174, &quot;Big Ten&quot;=307, &quot;Pac 12&quot;=258, &quot;SEC&quot;=413)
-Conferencemeans &lt;- c(&quot;ACC&quot;=19, &quot;Big 12&quot;=17.4, &quot;Big Ten&quot;=23.6, &quot;Pac 12&quot;=18.4, &quot;SEC&quot;=27.5)
-
-iron(
+Conferencemeans &lt;- c(&quot;ACC&quot;=19, &quot;Big 12&quot;=17.4, &quot;Big Ten&quot;=23.6, &quot;Pac 12&quot;=18.4, &quot;SEC&quot;=27.5)</code></pre>
+<pre class="r"><code>iron(
   waffle(Conferencetotals/5,
          rows=5,
          title=&quot;Current NFL players per conference&quot;,
@@ -310,16 +310,14 @@ iron(
          colors= c(&quot;pink&quot;, &quot;green&quot;, &quot;yellow&quot;, &quot;blue&quot;, &quot;maroon&quot;)) +
     labs(caption = &quot;Source: ESPN | By: Ella Devenny&quot;)
 )</code></pre>
-<p><img src="http://elladevenny.github.io/2021/04/04/does-the-sec-really-produce-the-most-nfl-players/index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<p><img src="http://elladevenny.github.io/2021/04/04/does-the-sec-really-produce-the-most-nfl-players/index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 So the SEC is the best conference based on current NFL players. We will give them that. Not only just for the total, but their average about of current NFL players from the colleges in their conference is clearly higher than the other conferences as well.</p>
 <p>Let’s look at only the SEC conference and decide if Alabama is the only reason their current NFL numbers are so high.</p>
 <pre class="r"><code>SECteams &lt;- NFLcount %&gt;%
-  filter(Conference == &quot;SEC&quot;)
-
-SECavg &lt;- Power5 %&gt;%
-  filter(Conference == &quot;SEC&quot;) 
-
-ggplot() +
+  filter(Conference == &quot;SEC&quot;)</code></pre>
+<pre class="r"><code>SECavg &lt;- Power5 %&gt;%
+  filter(Conference == &quot;SEC&quot;)</code></pre>
+<pre class="r"><code>ggplot() +
   geom_point(data=SECteams, aes(x=College, y=total)) +
   geom_hline(yintercept = 27.53333, color=&quot;maroon&quot;) +
   annotate(&quot;text&quot;, x=(&quot;Georgia&quot;), y=26, label=&quot;Conference Average&quot;, size=3.5, color= &quot;maroon&quot;) +
@@ -329,7 +327,7 @@ ggplot() +
        subtitle=&quot;The conference average isn&#39;t too affected by Alabama&quot;,
        caption= &quot;Source: ESPN | By: Ella Devenny&quot;) +
   theme_minimal()</code></pre>
-<p><img src="http://elladevenny.github.io/2021/04/04/does-the-sec-really-produce-the-most-nfl-players/index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<p><img src="http://elladevenny.github.io/2021/04/04/does-the-sec-really-produce-the-most-nfl-players/index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 Well, hate them or love them, the SEC conference deserves all the praise they get… well for current NFL player production anyway. This average shows that even with Alabama having such a high number of current players in the NFL, the other schools in the conferences still are close to the average. Therefor, their since their average is higher than the other conferences, they are currently the best at producing NFL players.
 Will this trend continue? The Big Ten could give them a run for their money with a strong push of NFL players in the next few years. It also depends on how many retire but it will be fun to keep an eye on.</p>
 
