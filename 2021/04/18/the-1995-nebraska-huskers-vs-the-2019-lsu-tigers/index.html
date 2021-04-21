@@ -79,12 +79,12 @@
 <p>I was intrigued by this, given that the teams were in two different decades I wanted to dive deeper into the stats and come to the bottom of this discussion. They were both such dominant teams, so it will be cool to see where their strengths and weakness were. In order to have a better understanding of these teams, it is important to look at various aspects of their play on both sides of the ball.</p>
 <p>Which team had better stats and deserves the “best team in college football history” title?</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
 ## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
 ## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
 ## ✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
-<pre><code>## ── Conflicts ────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(cowplot)
@@ -184,14 +184,14 @@ NEBoffenseyards %&gt;%
 <p>Something to point out, is that Nebraska’s offense yards came primarily from rushing, while LSU’s came primarily from passing. Different offensive strategies, but they both got the job done.</p>
 <pre class="r"><code>barLSU &lt;- ggplot(LSUoffensewide, aes(x=Split, weight=Yards, fill=Type)) +
   geom_bar() +
-  labs(title=&quot;LSU&#39;s Average Offensive Yards (568.9)&quot;,
+  labs(title=&quot;LSU&#39;s Avg. Offensive Yards (568.9)&quot;,
        subtitle=&quot;Split into Rushing and Passing&quot;,
        x=&quot;LSU&quot;,
        y=&quot;Number of Yards&quot;,
        caption = &quot;&quot;) + 
   theme_minimal() +
   theme(
-    plot.title = element_text(size = 14, face =&quot;bold&quot;),
+    plot.title = element_text(size = 11, face =&quot;bold&quot;),
     axis.title = element_text(size = 8),
     plot.subtitle = element_text(size = 10),
     panel.grid.minor = element_blank()
@@ -200,14 +200,14 @@ NEBoffenseyards %&gt;%
 
 barNEB &lt;- ggplot(NEBoffensewide, aes(x=Split, weight=Yards, fill=Type)) +
   geom_bar() +
-  labs(title=&quot;Nebraska&#39;s Average Offensive Yards (556.3)&quot;,
+  labs(title=&quot;Nebraska&#39;s Avg. Offensive Yards (556.3)&quot;,
        subtitle = &quot;Split into Rushing and Passing&quot;,
        x=&quot;Nebraska&quot;,
        y=&quot;Number of Yards&quot;,
        caption = &quot;Source: Sports-Reference.com | By: Ella Devenny&quot;) +
   theme_minimal() +
   theme(
-    plot.title = element_text(size = 14, face =&quot;bold&quot;),
+    plot.title = element_text(size = 11, face =&quot;bold&quot;),
     axis.title = element_text(size = 8),
     plot.subtitle = element_text(size = 10),
     panel.grid.minor = element_blank()
@@ -283,7 +283,7 @@ DEFchart &lt;- ggplot() +
 <pre class="r"><code>plot_grid(OFFchart, DEFchart, ncol=1)</code></pre>
 <p><img src="http://elladevenny.github.io/2021/04/18/the-1995-nebraska-huskers-vs-the-2019-lsu-tigers/index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 After completing this project and diving deeper into the stats of both of these teams, I have to give the 1995 Husker’s the “best team in college football history” title. Not because I am a student at UNL and a Huskers fan, but because the stats have given me reason to be comfortable in that statement. Not only did the Husker’s win by larger amounts than LSU through their season, but the Husker defensive is also stronger than the 2019 LSU Tiger’s defense. Nebraska was a rushing offense, and LSU’s defense allowed quite a bit of rushing yards. On the other side, LSU was a passing offense, and Nebraska’s defense allowed fewer passing yards than LSU’s defense.</p>
-<p>Now I know… Nebraska fan’s live in the past. But man what a time to have been a Husker fan!</p>
+<p>Now I know… Nebraska fan’s live in the past. But man what a time to have been a Husker fan! (I wasn’t born quite yet)</p>
 
     </div>
   </article>
