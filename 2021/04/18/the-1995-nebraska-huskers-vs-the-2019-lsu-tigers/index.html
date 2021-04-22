@@ -79,12 +79,12 @@
 <p>I was intrigued by this, given that the teams were in two different decades I wanted to dive deeper into the stats and come to the bottom of this discussion. They were both such dominant teams, so it will be cool to see where their strengths and weakness were. In order to have a better understanding of these teams, it is important to look at various aspects of their play on both sides of the ball.</p>
 <p>Which team had better stats and deserves the “best team in college football history” title?</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ───────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ── Attaching packages ────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
 ## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
 ## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
 ## ✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
-<pre><code>## ── Conflicts ──────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ───────────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(cowplot)
@@ -253,7 +253,7 @@ difflogLSU &lt;- difflogLSU %&gt;%
   theme_minimal() +
   theme(plot.title = element_text(size = 14, face = &quot;bold&quot;),
         axis.title = element_text(size=10),
-        plot.subtitle = element_text(size=12))</code></pre>
+        plot.subtitle = element_text(size=11.5))</code></pre>
 <p><img src="http://elladevenny.github.io/2021/04/18/the-1995-nebraska-huskers-vs-the-2019-lsu-tigers/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>Next, I am going to create a dumbbell chart to compare the defensive stats of each team. First, I am going to create a couple new datasets to work with, that show the offensive stats of both teams in one and the defensive stats of both teams in another. This way, I can focus on just the defensive stats for this chart.</p>
 <pre class="r"><code>CombinedStats %&gt;% 
