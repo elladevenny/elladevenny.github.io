@@ -79,12 +79,12 @@
 <p>I was intrigued by this, given that the teams were in two different decades I wanted to dive deeper into the stats and come to the bottom of this discussion. They were both such dominant teams, so it will be cool to see where their strengths and weakness were. In order to have a better understanding of these teams, it is important to look at various aspects of their play on both sides of the ball.</p>
 <p>Which team had better stats and deserves the “best team in college football history” title?</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ── Attaching packages ──────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
 ## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
 ## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
 ## ✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
-<pre><code>## ── Conflicts ───────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ─────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(cowplot)
@@ -156,44 +156,44 @@ library(ggrepel)</code></pre>
 ##   LSUDifference = col_double()
 ## )</code></pre>
 <p>I am going to compare the offense stats from the Nebraska team and the LSU team. I am going to look each team’s total offensive yard average for the season, but split it into rushing and passing yards. This will show me how they played offensively, as well as the how many yards they averaged on their opponents throughout their seasons. I will create a stacked bar chart so I can view the makeup of the average offensive yards per game for both teams.</p>
-<p>First, I am need to organize the data a little bit. I will do this by using the summarise function to create two new variables that represent the rushing and passing yards for each team. I am also going to use the filter function to only show me the offensive data.</p>
+<p>First, I am going to organize the data a little bit. I will do this by using the summarise function to create two new variables that represent the rushing and passing yards for each team. I am also going to use the filter function to only show me the offensive data.</p>
 <pre class="r"><code>LSUstats %&gt;% 
   group_by(Split) %&gt;%
   summarise(
-    AvgRushingYards = sum(RushingYds),
-    AvgPassingYards = sum(PassingYds),
+    AverageRushingYards = sum(RushingYds),
+    AveragePassingYards = sum(PassingYds),
   ) %&gt;% 
   filter(Split == &quot;Offense&quot;)-&gt; LSUoffenseyards</code></pre>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre class="r"><code>NEBstats %&gt;%
   group_by(Split) %&gt;%
   summarise(
-    AvgRushingYards = sum(RushingYds),
-    AvgPassingYards = sum(PassingYds),
+    AverageRushingYards = sum(RushingYds),
+    AveragePassingYards = sum(PassingYds),
   ) %&gt;% 
   filter(Split == &quot;Offense&quot;) -&gt; NEBoffenseyards</code></pre>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <p>Now that I have two new datasets for each teams offensive yards, I am going to use the pivot longer function so that I can create a stacked bar chart with the offensive stats for both teams. This makes it easier for R to read.</p>
 <pre class="r"><code>LSUoffenseyards %&gt;%
   pivot_longer(
-    cols=starts_with(&quot;Avg&quot;),
+    cols=starts_with(&quot;Average&quot;),
     names_to=&quot;Type&quot;,
     values_to=&quot;Yards&quot;
   ) -&gt; LSUoffensewide
 
 NEBoffenseyards %&gt;%
   pivot_longer(
-    cols=starts_with(&quot;Avg&quot;),
+    cols=starts_with(&quot;Average&quot;),
     names_to=&quot;Type&quot;,
     values_to=&quot;Yards&quot;
   ) -&gt; NEBoffensewide</code></pre>
-<p>Here is a stacked bar chart I created with the ggplot function from my datasets. Since these were two different charts that I created, I used the plot grid function from the cowplot package, to combine them into one chart making it easier to follow. Now, lets remember that Nebraska only played in 12 games and LSU played in 15. But since the data that I am showing is the AVERAGE number of offensive yards per game, this makes the data more accurate to compare. This is what their offensive’s averaged for passing and rushing throughout the season.</p>
+<p>Here is a stacked bar chart I created with the ggplot function from my datasets. Since these were two different charts that I created, I used the plot grid function from the cowplot package to combine them into one chart making it easier to follow. Now, lets remember that Nebraska only played in 12 games and LSU played in 15. But since the data that I am showing is the AVERAGE number of offensive yards per game, this makes the data more accurate to compare. This is what their offensive’s averaged for passing and rushing throughout the season.</p>
 <p>Something to point out, is that Nebraska’s offense yards came primarily from rushing, while LSU’s came primarily from passing. Different offensive strategies, but they both got the job done.</p>
 <pre class="r"><code>barLSU &lt;- ggplot(LSUoffensewide, aes(x=Split, weight=Yards, fill=Type)) +
   geom_bar() +
   labs(title=&quot;LSU Offense vs. Nebraska Offense: Passing or Rushing?&quot;,
        subtitle=&quot;The Tiger&#39;s gained more passing yards, where the Husker&#39;s gained more rushing yards.&quot;,
-       x=&quot;LSU (568.9 ypg)&quot;,
+       x=&quot;LSU (568.9 yards per game)&quot;,
        y=&quot;Number of Yards&quot;,
        caption = &quot;&quot;) + 
   theme_minimal() +
@@ -209,7 +209,7 @@ barNEB &lt;- ggplot(NEBoffensewide, aes(x=Split, weight=Yards, fill=Type)) +
   geom_bar() +
   labs(title= &quot;&quot;, 
        subtitle=&quot;&quot;,
-       x=&quot;Nebraska (556.3 ypg)&quot;,
+       x=&quot;Nebraska (556.3 yards per game)&quot;,
        y=&quot;Number of Yards&quot;,
        caption = &quot;Source: Sports-Reference.com | By: Ella Devenny&quot;) +
   theme_minimal() +
@@ -238,7 +238,7 @@ difflogNEB &lt;- NEBschedule %&gt;%
 difflogLSU &lt;- difflogLSU %&gt;%
   filter(`W` &lt;= 12)</code></pre>
 <p>As you can see, Nebraska outscored their opponents by a lot more than LSU did. Wins where a team scores more than their opponent by a lot, can be a true reflection of that team’s skill. The 1995 Husker’s win this battle!</p>
-<p>What is interesting with this as well, is that even if I didn’t cut off LSU’s cumulative point differential at their 12th game and had this show their cumulative differential through their 15th game, the 1995 Husker’s cumulative point differential for their season was still higher than LSU’s… by 66 points respectably!</p>
+<p>What is interesting with this as well is that even if I didn’t cut off LSU’s cumulative point differential at their 12th game and had this show their cumulative differential through their 15th game, the 1995 Husker’s cumulative point differential for their season was still higher than LSU’s… by 66 points respectably!</p>
 <pre class="r"><code>ggplot() +
   geom_step(data=difflogLSU, aes(x=W, y=CumDiff, group=School), color=&quot;purple&quot;) +
   geom_step(data=difflogNEB, aes(x=W, y=CumDiff, group=School), color=&quot;red&quot;) +
