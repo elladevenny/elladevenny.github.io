@@ -79,12 +79,12 @@
 <p>I was intrigued by this, given that the teams were in two different decades I wanted to dive deeper into the stats and come to the bottom of this discussion. They were both such dominant teams, so it will be cool to see where their strengths and weakness were. In order to have a better understanding of these teams, it is important to look at various aspects of their play on both sides of the ball.</p>
 <p>Which team had better stats and deserves the “best team in college football history” title?</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ── Attaching packages ───────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
 ## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
 ## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
 ## ✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ──────────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(cowplot)
@@ -100,6 +100,7 @@ library(ggalt)</code></pre>
 library(ggrepel)</code></pre>
 <p>I pulled various stats from sports-reference.com that I will be using in this blog post. I got both the schedules and outcomes for both teams during their seasons, as well as more specific team stats.</p>
 <p>Let me upload those so I can begin working with them.</p>
+<pre class="r"><code>LSUschedule &lt;- read_csv(&quot;LSU-Schedule2019.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   School = col_character(),
@@ -110,12 +111,14 @@ library(ggrepel)</code></pre>
 ##   W = col_double(),
 ##   L = col_double()
 ## )</code></pre>
+<pre class="r"><code>LSUstats &lt;- read_csv(&quot;LSU-Stats2019.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_double(),
 ##   Split = col_character()
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre class="r"><code>NEBschedule &lt;- read_csv(&quot;Nebraska-Schedule1995.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   School = col_character(),
@@ -126,6 +129,7 @@ library(ggrepel)</code></pre>
 ##   W = col_double(),
 ##   L = col_double()
 ## )</code></pre>
+<pre class="r"><code>NEBstats &lt;- read_csv(&quot;Nebraska-Stats1995.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   Split = col_character(),
@@ -140,6 +144,7 @@ library(ggrepel)</code></pre>
 ##   RushingAvg = col_double(),
 ##   RushingTD = col_double()
 ## )</code></pre>
+<pre class="r"><code>CombinedStats &lt;- read_csv(&quot;CombinedData.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   Stat = col_character(),
@@ -155,28 +160,30 @@ library(ggrepel)</code></pre>
 <pre class="r"><code>LSUstats %&gt;% 
   group_by(Split) %&gt;%
   summarise(
-    TotalRushingYards = sum(RushingYds),
-    TotalPassingYards = sum(PassingYds),
-  ) %&gt;% filter(Split == &quot;Offense&quot;)-&gt; LSUoffenseyards</code></pre>
+    AvgRushingYards = sum(RushingYds),
+    AvgPassingYards = sum(PassingYds),
+  ) %&gt;% 
+  filter(Split == &quot;Offense&quot;)-&gt; LSUoffenseyards</code></pre>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre class="r"><code>NEBstats %&gt;%
   group_by(Split) %&gt;%
   summarise(
-    TotalRushingYards = sum(RushingYds),
-    TotalPassingYards = sum(PassingYds),
-  ) %&gt;% filter(Split == &quot;Offense&quot;) -&gt; NEBoffenseyards</code></pre>
+    AvgRushingYards = sum(RushingYds),
+    AvgPassingYards = sum(PassingYds),
+  ) %&gt;% 
+  filter(Split == &quot;Offense&quot;) -&gt; NEBoffenseyards</code></pre>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <p>Now that I have two new datasets for each teams offensive yards, I am going to use the pivot longer function so that I can create a stacked bar chart with the offensive stats for both teams. This makes it easier for R to read.</p>
 <pre class="r"><code>LSUoffenseyards %&gt;%
   pivot_longer(
-    cols=starts_with(&quot;Total&quot;),
+    cols=starts_with(&quot;Avg&quot;),
     names_to=&quot;Type&quot;,
     values_to=&quot;Yards&quot;
   ) -&gt; LSUoffensewide
 
 NEBoffenseyards %&gt;%
   pivot_longer(
-    cols=starts_with(&quot;Total&quot;),
+    cols=starts_with(&quot;Avg&quot;),
     names_to=&quot;Type&quot;,
     values_to=&quot;Yards&quot;
   ) -&gt; NEBoffensewide</code></pre>
@@ -184,38 +191,38 @@ NEBoffenseyards %&gt;%
 <p>Something to point out, is that Nebraska’s offense yards came primarily from rushing, while LSU’s came primarily from passing. Different offensive strategies, but they both got the job done.</p>
 <pre class="r"><code>barLSU &lt;- ggplot(LSUoffensewide, aes(x=Split, weight=Yards, fill=Type)) +
   geom_bar() +
-  labs(title=&quot;LSU&#39;s Avg. Offensive Yards (568.9)&quot;,
-       subtitle=&quot;Split into Rushing and Passing&quot;,
-       x=&quot;LSU&quot;,
+  labs(title=&quot;LSU Offense vs. Nebraska Offense: Passing or Rushing?&quot;,
+       subtitle=&quot;The Tiger&#39;s gained more passing yards, where the Husker&#39;s gained more rushing yards.&quot;,
+       x=&quot;LSU (568.9 ypg)&quot;,
        y=&quot;Number of Yards&quot;,
        caption = &quot;&quot;) + 
   theme_minimal() +
   theme(
-    plot.title = element_text(size = 11, face =&quot;bold&quot;),
-    axis.title = element_text(size = 8),
-    plot.subtitle = element_text(size = 10),
+    plot.title = element_text(size = 14, face =&quot;bold&quot;),
+    axis.title = element_text(size = 10),
+    plot.subtitle = element_text(size = 12),
     panel.grid.minor = element_blank()
   )
   
 
 barNEB &lt;- ggplot(NEBoffensewide, aes(x=Split, weight=Yards, fill=Type)) +
   geom_bar() +
-  labs(title=&quot;Nebraska&#39;s Avg. Offensive Yards (556.3)&quot;,
-       subtitle = &quot;Split into Rushing and Passing&quot;,
-       x=&quot;Nebraska&quot;,
+  labs(title= &quot;&quot;, 
+       subtitle=&quot;&quot;,
+       x=&quot;Nebraska (556.3 ypg)&quot;,
        y=&quot;Number of Yards&quot;,
        caption = &quot;Source: Sports-Reference.com | By: Ella Devenny&quot;) +
   theme_minimal() +
   theme(
-    plot.title = element_text(size = 11, face =&quot;bold&quot;),
-    axis.title = element_text(size = 8),
-    plot.subtitle = element_text(size = 10),
+    plot.title = element_text(size = 14, face =&quot;bold&quot;),
+    axis.title = element_text(size = 10),
+    plot.subtitle = element_text(size = 12),
     panel.grid.minor = element_blank()
   )
 
 plot_grid(barLSU, barNEB)</code></pre>
-<p><img src="http://elladevenny.github.io/2021/04/18/the-1995-nebraska-huskers-vs-the-2019-lsu-tigers/index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
-Next we can look at the cumulative point differential that the two teams had throughout the season in a step chart. I am going to do this by finding the point differential these teams had in each game, and then create a cumulative point differential to see how they did throughout the season.</p>
+<p><img src="http://elladevenny.github.io/2021/04/18/the-1995-nebraska-huskers-vs-the-2019-lsu-tigers/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Next we can look at the cumulative point differential that the two teams had throughout the season in a step chart. I am going to do this by finding the point differential these teams had in each game, and then create a cumulative point differential to see how they did throughout the season.</p>
 <p>Since these were both undefeated teams, we know that their point differentials will both be positive, but this will show us how much they outscored each opponent by throughout the season and who had a higher cumulative differential at the end of their seasons… or to the 12th game in this case for LSU.</p>
 <p>I am going to create a step chart using the ggplot function and layers, so that we can see both teams together. Since LSU played in 3 more games than Nebraska, I am going to use the filter function to only show me LSU’s cumulative point differential up until week 12.</p>
 <pre class="r"><code>difflogLSU &lt;- LSUschedule %&gt;%
@@ -240,49 +247,48 @@ difflogLSU &lt;- difflogLSU %&gt;%
   labs(
     x=&quot;Game&quot;,
     y=&quot;Cumulative Point Differential&quot;,
-    title=&quot;1995 Nebraska Huskers vs. 2019 LSU Tigers Point Differential&quot;,
-    subtitle=&quot;The Huskers outscored their opponents by larger amounts than the LSU Tigers&quot;,
+    title=&quot;Nebraska outscored their opponents by more points than LSU&quot;,
+    subtitle=&quot;The Husker&#39;s cummulative point differential steadily rose at a higher rate than the Tiger&#39;s.&quot;,
     caption=&quot;Source: Sports-Reference.com | By: Ella Devenny&quot;) +
-  theme_minimal()</code></pre>
-<p><img src="http://elladevenny.github.io/2021/04/18/the-1995-nebraska-huskers-vs-the-2019-lsu-tigers/index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
-Next, I am going to create a dumbbell chart to compare both the various offensive and defensive stats bettween the two teams. First, I am going to create a couple new datasets to work with, that show the offensive stats of both teams in one and the defensive stats of both teams in another.</p>
+  theme_minimal() +
+  theme(plot.title = element_text(size = 14, face = &quot;bold&quot;),
+        axis.title = element_text(size=10),
+        plot.subtitle = element_text(size=12))</code></pre>
+<p><img src="http://elladevenny.github.io/2021/04/18/the-1995-nebraska-huskers-vs-the-2019-lsu-tigers/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Next, I am going to create a dumbbell chart to compare the defensive stats of each team. First, I am going to create a couple new datasets to work with, that show the offensive stats of both teams in one and the defensive stats of both teams in another. This way, I can focus on just the defensive stats for this chart.</p>
 <pre class="r"><code>CombinedStats %&gt;% 
   select(Stat, NebraskaOffense, LSUOffense)-&gt; OffenseStats
 
 CombinedStats %&gt;%
   select(Stat, NebraskaDefense, LSUDefense) -&gt; DefensiveStats</code></pre>
-<p>I will create two different charts and use the cowplot library function plot grid to see them in one chart. I added a few annotations, used the lab function, and color function so the chart is easier to read and understand.</p>
-<pre class="r"><code>OFFchart &lt;- ggplot() +
-  geom_dumbbell(
-    data=OffenseStats,
-    aes(y=Stat, x=NebraskaOffense, xend=LSUOffense),
-    size=1,
-    color=&quot;grey&quot;,
-    colour_x =&quot;red&quot;,
-    colour_xend = &quot;purple&quot;) +
-  theme_minimal() +
-  labs(title=&quot;1995 Nebraska Huskers and 2019 LSU Tigers&quot;, x=&quot;Value&quot;, y=&quot;Statistic&quot;, subtitle = &quot;Average Offensive Stats&quot;)
-
-  
-DEFchart &lt;- ggplot() +
+<p>I will create a dumbbell chart using the ggplot function. I added a few annotations, used the lab function, and color function so the chart is easier to read and understand.</p>
+<pre class="r"><code>DEFchart &lt;- ggplot() +
   geom_dumbbell(
     data=DefensiveStats, 
     aes(y=Stat, x=NebraskaDefense, xend=LSUDefense),
-    size=1,
+    size=1.5,
     color=&quot;grey&quot;,
     colour_x=&quot;red&quot;,
     colour_xend=&quot;purple&quot;) +
-  geom_text(aes(x=190, y=&#39;RushingYds&#39;, label=&quot;•&quot;), size= 8, color=&quot;purple&quot;) +
-  geom_text(aes(x=190, y=&#39;RushingTD&#39;, label=&quot;•&quot;), size= 8, color=&quot;red&quot;) +
-  geom_text(aes(x=199, y=&#39;RushingYds&#39;, label=&quot;= LSU&quot;), size= 3, color=&quot;black&quot;) +
-  geom_text(aes(x=204.5, y=&#39;RushingTD&#39;, label=&quot;= Nebraska&quot;), size= 3, color=&quot;black&quot;) +
+  geom_text(aes(x=197.5, y=&#39;RushingYds&#39;, label=&quot;•&quot;), size= 14, color=&quot;purple&quot;) +
+  geom_text(aes(x=197.5, y=&#39;RushingTD&#39;, label=&quot;•&quot;), size= 14, color=&quot;red&quot;) +
+  geom_text(aes(x=210, y=&#39;RushingYds&#39;, label=&quot;= LSU&quot;), size= 4, color=&quot;black&quot;) +
+  geom_text(aes(x=217.5, y=&#39;RushingTD&#39;, label=&quot;= Nebraska&quot;), size= 4, color=&quot;black&quot;) +
   theme_minimal() +
-  labs(x=&quot;Value&quot;, y=&quot;Statistic&quot;, subtitle = &quot;Average Defensive Stats&quot;, caption=&quot;Source: Sports-Reference.com | By: Ella Devenny&quot;)</code></pre>
-<p>As you can see from this dumbbell chart, Nebraska and LSU shared very similar stats in various aspects both defensively and offensively. The biggest difference offensively is between rushing and passing yards, which I already covered. Obviously for offensive stats it is better to be on the right, and for defensive stats it is better to be on the left. So what does all this mean?</p>
-<p>Different offensives run different plays, so a few of these stats (mostly offensively) aren’t as telling on the strength of the team. What is important to point out, is that Nebraska’s defense stats were better than LSU’s in every category on average.</p>
-<pre class="r"><code>plot_grid(OFFchart, DEFchart, ncol=1)</code></pre>
-<p><img src="http://elladevenny.github.io/2021/04/18/the-1995-nebraska-huskers-vs-the-2019-lsu-tigers/index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
-After completing this project and diving deeper into the stats of both of these teams, I have to give the 1995 Husker’s the “best team in college football history” title. Not because I am a student at UNL and a Huskers fan, but because the stats have given me reason to be comfortable in that statement. Not only did the Husker’s win by larger amounts than LSU through their season, but the Husker defensive is also stronger than the 2019 LSU Tiger’s defense. Nebraska was a rushing offense, and LSU’s defense allowed quite a bit of rushing yards. On the other side, LSU was a passing offense, and Nebraska’s defense allowed fewer passing yards than LSU’s defense.</p>
+  theme(
+    plot.title = element_text(size= 14, face = &quot;bold&quot;),
+    axis.title = element_text(size= 10),
+    plot.subtitle = element_text(size=12)) +
+  labs(title=&quot;Nebraska&#39;s impressive defense&quot;, 
+       x=&quot;Value&quot;, 
+       y=&quot;Defensive Statistic&quot;, 
+       subtitle = &quot;The 1995 Husker&#39;s defense performed better than the 2019 LSU Tiger&#39;s defense.&quot;, 
+       caption=&quot;Source: Sports-Reference.com | By: Ella Devenny&quot;)</code></pre>
+<p>As you can see from this dumbbell chart, Nebraska and LSU put up very similar numbers in various defensive stats. Obviously for defensive stats it is better to be on the left. So what does all this mean?</p>
+<p>It is important to point out that Nebraska’s defense stats were better than LSU’s in every category based on their average per game. The Husker’s defense allowed a lot fewer rushing yards per game, and fewer passing yards per game as well.</p>
+<pre class="r"><code>plot_grid(DEFchart, ncol=1)</code></pre>
+<p><img src="http://elladevenny.github.io/2021/04/18/the-1995-nebraska-huskers-vs-the-2019-lsu-tigers/index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>After completing this project and diving deeper into the stats of both of these teams, I have to give the 1995 Husker’s the “best team in college football history” title. Not because I am a student at UNL and a Huskers fan, but because the stats have given me reason to be comfortable in that statement. Not only did the Husker’s win by larger amounts than LSU through their season, but the Husker defensive is also stronger than the 2019 LSU Tiger’s defense. Nebraska was a rushing offense, and LSU’s defense allowed quite a bit of rushing yards per game. On the other side, LSU was a passing offense, and Nebraska’s defense allowed fewer passing yards than LSU’s defense.</p>
 <p>Now I know… Nebraska fan’s live in the past. But man what a time to have been a Husker fan! (I wasn’t born quite yet)</p>
 
     </div>
