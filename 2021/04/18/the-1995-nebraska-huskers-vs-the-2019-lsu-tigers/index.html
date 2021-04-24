@@ -191,8 +191,8 @@ NEBoffenseyards %&gt;%
 <p>Something to point out, is that Nebraska’s offense yards came primarily from rushing, while LSU’s came primarily from passing. Different offensive strategies, but they both got the job done.</p>
 <pre class="r"><code>barLSU &lt;- ggplot(LSUoffensewide, aes(x=Split, weight=Yards, fill=Type)) +
   geom_bar() +
-  labs(title=&quot;LSU Offense vs. Nebraska Offense: Passing or Rushing?&quot;,
-       subtitle=&quot;The Tiger&#39;s gained more passing yards, where the Husker&#39;s gained more rushing yards.&quot;,
+  labs(title=&quot;Two national champions with characteristically different offenses&quot;,
+       subtitle=&quot;LSU gained more passing yards, where Nebraska gained more rushing yards.&quot;,
        x=&quot;LSU (568.9 yards per game)&quot;,
        y=&quot;Number of Yards&quot;,
        caption = &quot;&quot;) + 
@@ -201,7 +201,7 @@ NEBoffenseyards %&gt;%
     plot.title = element_text(size = 14, face =&quot;bold&quot;),
     axis.title = element_text(size = 10),
     plot.subtitle = element_text(size = 12),
-    panel.grid.minor = element_blank()
+    panel.grid.minor = element_blank(),
   )
   
 
@@ -253,7 +253,9 @@ difflogLSU &lt;- difflogLSU %&gt;%
   theme_minimal() +
   theme(plot.title = element_text(size = 14, face = &quot;bold&quot;),
         axis.title = element_text(size=10),
-        plot.subtitle = element_text(size=11.5))</code></pre>
+        plot.subtitle = element_text(size=11.5)) +
+  scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12)) +
+  scale_y_continuous(breaks=c(50,100,150,200,250,300,350,400,450))</code></pre>
 <p><img src="http://elladevenny.github.io/2021/04/18/the-1995-nebraska-huskers-vs-the-2019-lsu-tigers/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>Next, I am going to create a dumbbell chart to compare the defensive stats of each team. First, I am going to create a couple new datasets to work with, that show the offensive stats of both teams in one and the defensive stats of both teams in another. This way, I can focus on just the defensive stats for this chart.</p>
 <pre class="r"><code>CombinedStats %&gt;% 
@@ -279,10 +281,11 @@ CombinedStats %&gt;%
     plot.title = element_text(size= 14, face = &quot;bold&quot;),
     axis.title = element_text(size= 10),
     plot.subtitle = element_text(size=12)) +
-  labs(title=&quot;Nebraska&#39;s impressive defense&quot;, 
-       x=&quot;Value&quot;, 
+  labs(title=&quot;Nebraska&#39;s defensive thrashes LSU&#39;s defense&quot;, 
+       x=&quot;Value of Specified Stat&quot;, 
        y=&quot;Defensive Statistic&quot;, 
-       subtitle = &quot;The 1995 Husker&#39;s defense performed better than the 2019 LSU Tiger&#39;s defense.&quot;, 
+       subtitle = &quot;The 1995 Husker&#39;s outperformed the 2019 Tiger&#39;s in every defensive stat.&quot;,
+       
        caption=&quot;Source: Sports-Reference.com | By: Ella Devenny&quot;)</code></pre>
 <p>As you can see from this dumbbell chart, Nebraska and LSU put up very similar numbers in various defensive stats. Obviously for defensive stats it is better to be on the left. So what does all this mean?</p>
 <p>It is important to point out that Nebraska’s defense stats were better than LSU’s in every category based on their average per game. The Husker’s defense allowed a lot fewer rushing yards per game, and fewer passing yards per game as well.</p>
